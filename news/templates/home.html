@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block page_title %}ali{% endblock %}
+{% block body %}
+    <style>
+        .container{
+            width: 80%;
+        }
+    </style>
+    <div class="row">
+
+       {% include 'carousel.html' %}
+    </div>
+    <div class="row" >
+        {% include 'topNews.html' %}
+    </div>
+{% endblock %}

@@ -1,0 +1,15 @@
+{% extends 'NGO/Profile.html' %}
+{% block content %}
+    <div class="panel panel-primary">
+        <div class="panel-heading" id="panel-header" dir="rtl">آرشیو اخبار</div>
+        <div class="panel-body">
+            <table border="0" class="col-md-12">
+                <tbody>
+                    {% for news in r_news %}
+                        {% include 'components/r_news.html' %}
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}

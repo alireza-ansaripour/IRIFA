@@ -1,0 +1,10 @@
+{% load Math %}
+<div class="item active">
+    <a href="/article/{{ news.random_int }}">
+        <img src="media/News/pictures/{{ news.random_int }}.jpg" alt="Chania">
+        <div class="carousel-caption" id="caption">
+            <h4>{{ news.title }} </h4>
+            <p>{{ news.shortDescription }}</p>
+        </div>
+    </a>
+</div>

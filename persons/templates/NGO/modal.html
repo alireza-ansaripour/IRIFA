@@ -1,0 +1,23 @@
+<div class="modal fade" id="{{ pic.unique_id }}" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4>{{ pic.text }}
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                </h4>
+
+              </div>
+            <div class="modal-body">
+                <div class="row">
+                    <img data-toggle="modal"data-target="#basicModal" src="/media/{{ pic.unique_id }}.jpg" class="col-xs-12 col-md-12">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">بستن</button>
+                {% if can_edit %}
+                    <button type="button" class="btn btn-danger" onclick="delete_photo('{{ pic.unique_id }}')">حذف</button>
+                {% endif %}
+            </div>
+    </div>
+  </div>
+</div>
