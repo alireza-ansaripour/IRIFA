@@ -4,94 +4,110 @@
     {% load date %}
     {% include 'head.html' %} {# CSS an JS files #}
     <body background="/static/img/gray.jpg">
-        <div class="container" id="container">
-            <div class="row"> {# Site header #}
-                <img src="/static/img/title_img.jpg" class="img-rounded" id="TOP_IMAGE" width="100%" height="150">
-            </div>
-            <div class="row">
-                <nav class="navbar col-md-12" height="10"> {# NavBar #}
-                    <div class="navbar-header" style="color: #ffffff;"> {# Showing the date #}
-                        <div  dir="rtl"> {{ a|jalali }}</div>
-                    </div>
-                        <div> {# Showing the continent #}
-                            <ul class="nav navbar-nav navbar-right">
-                                {% if user.is_authenticated %}
-                                    <li><a href="/logout"></span> خروج</a></li>
-                                    {% if not user.is_superuser %}
-                                        <li><a href="/ngo/{{ expert.NGO.latin_name }}/">صفحه انجمن</a> </li>
-                                        <li><a href="/static/admin"></span> صفحه ی مدیریتی</a></li>
-                                    {% endif %}
-                                {% endif %}
+        <div class="container-fluid">
+            <div class="col-sm-1 col-lg-2"></div>
+            <div class="col-sm-10 col-lg-8">
+                <div class="row hidden-xs"> {# Site header #}
+                    <img src="/static/img/title_img.jpg" class="img-rounded" id="TOP_IMAGE" width="100%" height="150">
+                </div>
+                <div class="row">
+                    <nav class="navbar navbar-default col-md-12" height="10"> {# NavBar #}
+                        <div class="container-fluid">
+                            <!-- Brand and toggle get grouped for better mobile display -->
+                            <div class="navbar-header" style="color: #ffffff">
+                                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse" aria-expanded="false">
+                                    <span class="sr-only">Toggle navigation</span>
+                                    <span class="icon-bar"></span>
+                                    <span class="icon-bar"></span>
+                                    <span class="icon-bar"></span>
+                                </button>
+                              <div  dir="rtl"> {{ a|jalali }}</div>
+                            </div>
+                            <div class="collapse navbar-collapse" >
 
-                                {% block nav_list %}
-                                    <li class="dropdown">
-                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">آمریکای شمالی<b class="caret"></b></a>
-                                        <ul class="dropdown-menu">
-                                            {% for ngo in north_america %}
-                                                <li dir="rtl"><a dir="rtl" href="{{ BASE_URL }}/ngo/{{ ngo.latin_name }}">{{ ngo.persian_name }}</a></li>
-                                            {% endfor %}
+                                <div> {# Showing the continent #}
+                                    <ul class="nav navbar-nav navbar-right" style="padding-right: 0px" dir="rtl">
+                                        {% if user.is_authenticated %}
+                                            <li><a href="/logout"></span> خروج</a></li>
+                                            {% if not user.is_superuser %}
+                                                <li><a href="/ngo/{{ expert.NGO.latin_name }}/">صفحه انجمن</a> </li>
+                                                <li><a href="/static/admin"></span> صفحه ی مدیریتی</a></li>
+                                            {% endif %}
+                                        {% endif %}
 
-                                        </ul>
-                                    </li>
+                                        {% block nav_list %}
+                                            <li class="dropdown">
+                                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">آمریکای شمالی<b class="caret"></b></a>
+                                                <ul class="dropdown-menu">
+                                                    {% for ngo in north_america %}
+                                                        <li dir="rtl"><a dir="rtl" href="{{ BASE_URL }}/ngo/{{ ngo.latin_name }}">{{ ngo.persian_name }}</a></li>
+                                                    {% endfor %}
 
-                                    <li class="dropdown">
-                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">آمریکای جنوبی<b class="caret"></b></a>
-                                        <ul class="dropdown-menu">
-                                            {% for ngo in south_america %}
-                                                <li dir="rtl"><a dir="rtl" href="{{ BASE_URL }}/ngo/{{ ngo.latin_name }}">{{ ngo.persian_name }}</a></li>
-                                            {% endfor %}
+                                                </ul>
+                                            </li>
 
-                                        </ul>
-                                    </li>
+                                            <li class="dropdown">
+                                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">آمریکای جنوبی<b class="caret"></b></a>
+                                                <ul class="dropdown-menu">
+                                                    {% for ngo in south_america %}
+                                                        <li dir="rtl"><a dir="rtl" href="{{ BASE_URL }}/ngo/{{ ngo.latin_name }}">{{ ngo.persian_name }}</a></li>
+                                                    {% endfor %}
 
-                                    <li class="dropdown">
-                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">آسیا <b class="caret"></b></a>
-                                        <ul class="dropdown-menu">
-                                            {% for ngo in asia %}
+                                                </ul>
+                                            </li>
 
-                                                <li dir="rtl"><a dir="rtl" href="{{ BASE_URL }}/ngo/{{ ngo.latin_name }}"><div id="title">{{ ngo.persian_name }}</div></a></li>
-                                            {% endfor %}
-                                        </ul>
-                                    </li>
+                                            <li class="dropdown">
+                                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">آسیا <b class="caret"></b></a>
+                                                <ul class="dropdown-menu">
+                                                    {% for ngo in asia %}
 
-
-                                    <li class="dropdown">
-                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">اروپا <b class="caret"></b></a>
-                                        <ul class="dropdown-menu">
-                                            {% for ngo in europe %}
-                                                <li dir="rtl"><a dir="rtl" href="{{ BASE_URL }}/ngo/{{ ngo.latin_name }}">{{ ngo.persian_name }}</a></li>
-                                            {% endfor %}
-                                        </ul>
-                                    </li>
-
-                                    <li class="dropdown">
-                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">آفریقا <b class="caret"></b></a>
-                                        <ul class="dropdown-menu">
-                                            {% for ngo in africa %}
-                                                <li dir="rtl"><a dir="rtl" href="{{ BASE_URL }}/ngo/{{ ngo.latin_name }}">{{ ngo.persian_name }}</a></li>
-                                            {% endfor %}
-                                        </ul>
-                                    </li>
-
-                                    <li class="dropdown">
-                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">استرالیا و اقیانوسیه<b class="caret"></b></a>
-                                        <ul class="dropdown-menu">
-                                            {% for ngo in australia %}
-                                                <li dir="rtl"><a dir="rtl" href="{{ BASE_URL }}/ngo/{{ ngo.latin_name }}">{{ ngo.persian_name }}</a></li>
-                                            {% endfor %}
-                                        </ul>
-                                    </li>
-                                    <li><a href="/"></span> خانه</a></li>
+                                                        <li dir="rtl"><a dir="rtl" href="{{ BASE_URL }}/ngo/{{ ngo.latin_name }}"><div id="title">{{ ngo.persian_name }}</div></a></li>
+                                                    {% endfor %}
+                                                </ul>
+                                            </li>
 
 
-                                {% endblock %}
-                            </ul>
+                                            <li class="dropdown">
+                                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">اروپا <b class="caret"></b></a>
+                                                <ul class="dropdown-menu">
+                                                    {% for ngo in europe %}
+                                                        <li dir="rtl"><a dir="rtl" href="{{ BASE_URL }}/ngo/{{ ngo.latin_name }}">{{ ngo.persian_name }}</a></li>
+                                                    {% endfor %}
+                                                </ul>
+                                            </li>
+
+                                            <li class="dropdown">
+                                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">آفریقا <b class="caret"></b></a>
+                                                <ul class="dropdown-menu">
+                                                    {% for ngo in africa %}
+                                                        <li dir="rtl"><a dir="rtl" href="{{ BASE_URL }}/ngo/{{ ngo.latin_name }}">{{ ngo.persian_name }}</a></li>
+                                                    {% endfor %}
+                                                </ul>
+                                            </li>
+
+                                            <li class="dropdown">
+                                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">استرالیا و اقیانوسیه<b class="caret"></b></a>
+                                                <ul class="dropdown-menu">
+                                                    {% for ngo in australia %}
+                                                        <li dir="rtl"><a dir="rtl" href="{{ BASE_URL }}/ngo/{{ ngo.latin_name }}">{{ ngo.persian_name }}</a></li>
+                                                    {% endfor %}
+                                                </ul>
+                                            </li>
+                                            <li><a href="/"></span> خانه</a></li>
+
+
+                                        {% endblock %}
+                                    </ul>
+                                </div>
+                            </div>
                         </div>
-                </nav>
-            </div>
-            <div class="row">{# Body of the page #}
-                {% block body %}
-                {% endblock %}
+                    </nav>
+                </div>
+                <div class="row">{# Body of the page #}
+
+                    {% block body %}
+                    {% endblock %}
+                </div>
             </div>
         </div>
         <footer >

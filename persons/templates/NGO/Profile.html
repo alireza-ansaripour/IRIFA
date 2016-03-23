@@ -1,164 +1,65 @@
-{# This is the main profile page of each NGO #}
-<!DOCTYPE html>
-<html lang="en">
-    {% load date %}
-    {% include 'head.html' %}
-    <title>انجمن دوستی ایران و {{ page_title }}</title>
-    <body background="/static/img/gray.jpg">
-        <div class="container" id="container">
-            <div class="row">
-                <img src="/static/img/title_img.jpg" class="img-rounded" alt="Cinque Terre" id="TOP_IMAGE" width="100%" height="150">
+{% extends 'base.html' %}
+{% block body %}
+    <div class="row" >
+        <div class="col-md-4">
+            <div class="panel panel-primary">
+                <div class="panel-body">
 
-            </div>
-            <div class="row">
-                <nav class="navbar navbar-inverse col-md-12" height="10">
-                    <div class="navbar-header" style="color: #ffffff;">
-                        <div dir="rtl"> {{ a|jalali }}</div>
-                    </div>
-                        <div>
-                            <ul class="nav navbar-nav navbar-right">
-                                {% if user.is_authenticated %}
-                                    <li><a href="/logout"></span> خروج</a></li>
-                                    <li><a href="/admin"></span> صفحه ی مدیریتی</a></li>
-                                    {% if not user.is_superuser %}
-                                        <li><a href="/ngo/{{ expert.NGO.latin_name }}/">صفحه انجمن</a> </li>
-                                    {% endif %}
-                                {% endif %}
-                                <li class="dropdown">
-                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">آمریکای شمالی<b class="caret"></b></a>
-                                    <ul class="dropdown-menu">
-                                        {% for ngo in north_america %}
-                                            <li dir="rtl"><a dir="rtl" href="{{ BASE_URL }}/ngo/{{ ngo.latin_name }}">{{ ngo.persian_name }}</a></li>
-                                        {% endfor %}
-
-                                    </ul>
-                                </li>
-                                <li class="dropdown">
-                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">آمریکای جنوبی<b class="caret"></b></a>
-                                    <ul class="dropdown-menu">
-                                        {% for ngo in south_america %}
-                                            <li dir="rtl"><a dir="rtl" href="{{ BASE_URL }}/ngo/{{ ngo.latin_name }}">{{ ngo.persian_name }}</a></li>
-                                        {% endfor %}
-
-                                    </ul>
-                                </li>
-
-                                <li class="dropdown">
-                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">آسیا <b class="caret"></b></a>
-                                    <ul class="dropdown-menu">
-                                        {% for ngo in asia %}
-
-                                            <li dir="rtl"><a dir="rtl" href="{{ BASE_URL }}/ngo/{{ ngo.latin_name }}"><div id="title">{{ ngo.persian_name }}</div></a></li>
-                                        {% endfor %}
-                                    </ul>
-                                </li>
-
-
-                                <li class="dropdown">
-                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">اروپا <b class="caret"></b></a>
-                                    <ul class="dropdown-menu">
-                                        {% for ngo in europe %}
-                                            <li dir="rtl"><a dir="rtl" href="{{ BASE_URL }}/ngo/{{ ngo.latin_name }}">{{ ngo.persian_name }}</a></li>
-                                        {% endfor %}
-                                    </ul>
-                                </li>
-
-                                <li class="dropdown">
-                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">آفریقا <b class="caret"></b></a>
-                                    <ul class="dropdown-menu">
-                                        {% for ngo in africa %}
-                                            <li dir="rtl"><a dir="rtl" href="{{ BASE_URL }}/ngo/{{ ngo.latin_name }}">{{ ngo.persian_name }}</a></li>
-                                        {% endfor %}
-                                    </ul>
-                                </li>
-
-                                <li class="dropdown">
-                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">استرالیا و اقیانوسیه<b class="caret"></b></a>
-                                    <ul class="dropdown-menu">
-                                        {% for ngo in australia %}
-                                            <li dir="rtl"><a dir="rtl" href="{{ BASE_URL }}/ngo/{{ ngo.latin_name }}">{{ ngo.persian_name }}</a></li>
-                                        {% endfor %}
-                                    </ul>
-                                </li>
-                                <li><a href="{{ BASE_URL }}/">خانه</a></li>
-                            </ul>
-                        </div>
-                </nav>
-            </div>
-            {% block body %}
-
-                <div class="row" >
-                    <div class="col-md-4">
-                        <div class="panel panel-primary">
-                            <div class="panel-body">
-
-                                <div class="col-xs-2"></div> <img class="col-xs-8" src="/media/NGO/flags/{{ ngo.latin_name }}.jpg">
-                                <div class="col-xs-12" style="text-align: center;font-size: 40px">{{ ngo.persian_name}}</div>
-                            </div>
-                        </div>
-                        {% include 'NGO/gallery.html' %}
-                        {% include 'components/links.html' %}
-                    </div>
-                    <div class="col-md-8">
-
-                        <div class="panel panel-primary">
-                            <div class="panel-heading" id="panel-header" dir="rtl">آخرین اخبار</div>
-                            <div class="panel-body">
-                                <table border="0" class="col-md-12">
-                                    <tbody>
-                                        {% for news in r_news %}
-                                            {% include 'components/r_news.html' %}
-                                        {% endfor %}
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                        <div class="panel panel-primary">
-                            <div dir="rtl" id="panel-header" class="panel-heading"> درباره {{ngo.persian_name}}
-                             {% if can_edit %}
-
-                                 <a href="#summernote" id="toggle-country" style="color: #ffffff">(ویرایش)</a>
-                             {% endif %}
-                            </div>
-                            <div class="panel-body">
-                                {% autoescape off %}
-                                    <div id="summernote" dir="rtl">{{ ngo.about_country }}</div>
-                                {% endautoescape %}
-                                {% if can_edit %}
-                                    <br>
-                                    <a href="#" class="btn btn-primary" style="float: right;visibility: hidden" onclick="send('{{ ngo.latin_name }}','country')" id="submit">ثبت</a>
-                                {% endif %}
-                            </div>
-                        </div>
-                        <div class="panel panel-primary">
-                            <div dir="rtl" id="panel-header" class="panel-heading">درباره انجمن دوستی
-                             {% if can_edit %}
-
-                                 <a href="#summernote" id="toggle-country" style="color: #ffffff">(ویرایش)</a>
-                             {% endif %}
-                            </div>
-                            <div class="panel-body">
-                                {% autoescape off %}
-                                    <div id="summernote" dir="rtl">{{ ngo.about_NGO }}</div>
-                                {% endautoescape %}
-                                {% if can_edit %}
-                                    <br>
-                                    <a href="#" class="btn btn-primary" style="float: right;visibility: hidden" onclick="send('{{ ngo.latin_name }}','country')" id="submit">ثبت</a>
-                                {% endif %}
-                            </div>
-                        </div>
-                    </div>
+                    <div class="col-xs-2"></div> <img class="col-xs-8" src="/media/NGO/flags/{{ ngo.latin_name }}.jpg">
+                    <div class="col-xs-12" style="text-align: center;font-size: 40px">{{ ngo.persian_name}}</div>
                 </div>
-
-            {% endblock %}
-        </div>
-        <script src="/static/js/edit.js"></script>
-        <footer >
-            <div class="col-xs-12" >
-                <p></p>
-                <p><a href="/admin/">ورود اعضا</a> | <a href="#">قوانین</a> </p>
-                <p>کلیه حقوق این سایت برای پایگاه اینترنتی انجمن دوستی ایران و سایر کشور ها است</p>
             </div>
-        </footer>
-    </body>
-</html>
+            {% include 'NGO/gallery.html' %}
+            {% include 'components/links.html' %}
+        </div>
+        <div class="col-md-8">
+
+            <div class="panel panel-primary">
+                <div class="panel-heading" id="panel-header" dir="rtl">آخرین اخبار</div>
+                <div class="panel-body">
+                    <table border="0" class="col-md-12">
+                        <tbody>
+                            {% for news in r_news %}
+                                {% include 'components/r_news.html' %}
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="panel panel-primary">
+                <div dir="rtl" id="panel-header" class="panel-heading"> درباره {{ngo.persian_name}}
+                 {% if can_edit %}
+
+                     <a href="#summernote" id="toggle-country" style="color: #ffffff">(ویرایش)</a>
+                 {% endif %}
+                </div>
+                <div class="panel-body">
+                    {% autoescape off %}
+                        <div id="summernote" dir="rtl">{{ ngo.about_country }}</div>
+                    {% endautoescape %}
+                    {% if can_edit %}
+                        <br>
+                        <a href="#" class="btn btn-primary" style="float: right;visibility: hidden" onclick="send('{{ ngo.latin_name }}','country')" id="submit">ثبت</a>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="panel panel-primary">
+                <div dir="rtl" id="panel-header" class="panel-heading">درباره انجمن دوستی
+                 {% if can_edit %}
+
+                     <a href="#summernote" id="toggle-country" style="color: #ffffff">(ویرایش)</a>
+                 {% endif %}
+                </div>
+                <div class="panel-body">
+                    {% autoescape off %}
+                        <div id="summernote" dir="rtl">{{ ngo.about_NGO }}</div>
+                    {% endautoescape %}
+                    {% if can_edit %}
+                        <br>
+                        <a href="#" class="btn btn-primary" style="float: right;visibility: hidden" onclick="send('{{ ngo.latin_name }}','country')" id="submit">ثبت</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
