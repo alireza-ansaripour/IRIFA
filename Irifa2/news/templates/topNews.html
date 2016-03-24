@@ -1,0 +1,21 @@
+<div class="col-md-8" id="news_container">
+    <div class="panel panel-primary" >
+        <div class="panel-heading" id="panel-header">
+            <span class="glyphicon glyphicon-globe"></span>
+            <div style="float: right">اخبار و رویداد ها</div>
+        </div>
+        <div class="panel-body">
+            <table border="0" class="col-md-12" id="table">
+                <tbody>
+                    {% for news in r_news %}
+                        {% include 'components/r_news.html' %}
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<div class="col-md-4">
+    {% include 'components/links.html' %}
+</div>
+
